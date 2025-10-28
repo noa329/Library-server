@@ -90,3 +90,13 @@ app.patch('/books/:id/return', (req, res) => {
      book.isBorrowed = false;
      res.send(`Book "${book.name}" returned successfully`);
 });
+//מחיקת ספר
+app.delete('/books/:id', (req, res) => {
+    const bookIndex = books.findIndex(b => b.id === +req.params.id);
+    if (bookIndex !== -1) {
+        const deletedBook = books.splice(bookIndex, 1);
+        res.json(books);
+    } else {
+        res.status(404).send('Book not found');
+    }   
+});
