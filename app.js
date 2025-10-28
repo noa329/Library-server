@@ -1,0 +1,56 @@
+import express from 'express';
+import {borrows, books } from './db.js';
+
+const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+//נתיב ברירת מחדל
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
+const port = 5000;
+//הפעלת השרת
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+});
+//קבלת כל הספרים
+app.get('/books', (req, res) => {
+  res.json(books);
+});
+//קבלת ספר לפי קוד
+app.get('/books/:id', (req, res) => {
+    const book=books.find(b=>b.id===+req.params.id);
+    if (book) {
+        res.json(book);
+    } else {
+        res.status(404).send('Book not found');
+    }
+});
+//הוספת ספר חדש
+app.post('/books', (req, res) => {
+    const newBook = req.body;
+    books.push(newBook);
+    res.json(books);
+});
+//עדכון ספר קיים
+app.put('/books/:id', (req, res) => {
+    const bookIndex = books.findIndex(b => b.id === +req.params.id);
+    if (bookIndex !== -1) {
+        books[bookIndex] = { ...books[bookIndex], ...req.body };
+        res.json(books[bookIndex]);
+    } else {
+        res.status(404).send('Book not found');
+    }
+});
+//מחיקת ספר
+app.delete('/books/:id', (req, res) => {
+    const bookIndex = books.findIndex(b => b.id === +req.params.id);
+    if (bookIndex !== -1) {
+        const deletedBook = books.splice(bookIndex, 1);
+        res.json(deletedBook);
+    } else {
+        res.status(404).send('Book not found');
+    }
+});
