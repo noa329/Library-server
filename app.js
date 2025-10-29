@@ -17,8 +17,17 @@ app.listen(port, () => {
 });
 //קבלת כל הספרים
 app.get('/books', (req, res) => {
-  res.json(books);
+    const page = +req.query.page||1 ;
+    const limit = +req.query.limit||5;
+    const category = req.query.category||'cooking';
+    // חישוב אינדקסים לעמודים
+    const startIndex = (page - 1) * limit;
+    const endIndex = startIndex + limit;
+    res.json(books.filter(b => b.category === category).slice(startIndex, endIndex));
+  
 });
+
+
 //קבלת ספר לפי קוד
 app.get('/books/:id', (req, res) => {
     const book=books.find(b=>b.id===+req.params.id);
