@@ -21,5 +21,5 @@ export const errorHandler = (err, req, res, next) => {
  * @param {import("express").NextFunction} next function to move to the next middleware
  */
 export const notFoundHandler = (req, res, next) => {
-  res.status(404).json({ error: 'Route not found',path: req.originalUrl });
+  next({ status: 404, message: `url ${req.url} method: ${req.method} not found!` });
 };

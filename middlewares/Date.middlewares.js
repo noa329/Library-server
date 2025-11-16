@@ -19,8 +19,8 @@ export const printDateGET=(req, res, next)=>{
    if(req.method=="GET")
     {
         console.log("Current Date:" ,req.currentDate);
-        next();
+        
     }
     
-    
+    next();
 }
