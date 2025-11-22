@@ -13,7 +13,7 @@ export const getAllBooks=(req, res) => {
 
 
 //קבלת ספר לפי קוד
-export const getBookById=(req, res) => {
+export const getBookById=(req, res,next) => {
     const book=books.find(b=>b.id===+req.params.id);
     if (book) {
         res.json(book);
@@ -28,7 +28,7 @@ export const addBook= (req, res) => {
     res.status(201).json(books);
 };
 //עדכון ספר קיים
-export const updateBook=(req, res) => {
+export const updateBook=(req, res,next) => {
     const bookIndex = books.findIndex(b => b.id === +req.params.id);
     if (bookIndex !== -1) {
         books[bookIndex] = { ...books[bookIndex], ...req.body };
@@ -39,7 +39,7 @@ export const updateBook=(req, res) => {
 };
 
 //השאלת ספר
-export const borrowBook= (req, res) => {
+export const borrowBook= (req, res,next) => {
     const book=books.find(b=>b.id===+req.params.id)
     const user=users.find(u=>u.code===+req.body.userId) ;
     if (!book) {
@@ -65,7 +65,7 @@ export const borrowBook= (req, res) => {
 
 };
 //החזרת ספר
-export const returnBook= (req, res) => {
+export const returnBook= (req, res,next) => {
     const book=books.find(b=>b.id===+req.params.id)
     const user=users.find(u=>u.Borrowedbooks.some(x=>x==+req.params.id))
     if (!book) {
@@ -85,7 +85,7 @@ export const returnBook= (req, res) => {
      res.status(202).json(`Book "${book.name}" returned successfully`);
 };
 //מחיקת ספר
-export const deleteBook=(req, res) => {
+export const deleteBook=(req, res,next) => {
     const bookIndex = books.findIndex(b => b.id === +req.params.id);
     if (bookIndex !== -1) {
          books.splice(bookIndex, 1);

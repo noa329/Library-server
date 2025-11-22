@@ -1,12 +1,12 @@
 import { users } from '../user.js';
 
- export const sign_up=(req, res) => {
+ export const sign_up=(req, res,next) => {
  const { userName, email, password } = req.body;
 
   const existingUser = users.find( u => u.email === email || u.userName === userName);
 
   if (existingUser) {
-     return  next({ status: 404, message: 'User already exists' });
+     return  next({ status: 409, message: 'User already exists' });
   }
 
     const newuser = req.body;
@@ -14,7 +14,7 @@ import { users } from '../user.js';
     res.status(201).json(newuser);
 };
 
-export const sign_in=(req, res) => {
+export const sign_in=(req, res,next) => {
    const { email, password } = req.body;
   const user = users.find(u => u.email === email);
   if (!user) {
