@@ -11,8 +11,12 @@ import bookRouter from './routes/book.route.js'
 import userRouter from './routes/user.route.js'
 import cors from 'cors';
 import morgan from 'morgan';
+import { connectDB } from './config/db.js';
+
 
 const app = express();
+
+connectDB();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -21,7 +25,7 @@ app.use(morgan('dev'));
 app.use(cors());
 
 app.use(addRequestDate);
-app.use(createBlockDays());
+//app.use(createBlockDays());
 app.use(printDateGET);
 app.use(express.static('public'));
 

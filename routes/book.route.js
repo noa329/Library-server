@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {addBook,deleteBook,updateBook,getAllBooks,getBookById,borrowBook,returnBook,uploadBookImage}from "../controllers/book.controller.js"
+import {addBook,deleteBook,updateBook,getAllBooks,getBookById,borrowBook,returnBook,uploadBookImage,getBooksByCategory}from "../controllers/book.controller.js"
 import { joiValidator } from "../middlewares/joi-validator.middleware.js";
 import { validateBook } from "../models/book.model.js";
 import { upload } from '../middlewares/multerConfig.js';
@@ -23,4 +23,6 @@ router.patch('/:id/borrow',joiValidator(validateBook.borrowBook), borrowBook) ;
 router.patch('/:id/return',returnBook);
 //מחיקת ספר
 router.delete('/:id',deleteBook);
+//קבלת ספרים לפי קטגוריה
+router.get('/category/:category',getBooksByCategory);
 export default router;
