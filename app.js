@@ -25,7 +25,7 @@ app.use(morgan('dev'));
 app.use(cors());
 
 app.use(addRequestDate);
-//app.use(createBlockDays());
+app.use(createBlockDays());
 app.use(printDateGET);
 app.use(express.static('public'));
 

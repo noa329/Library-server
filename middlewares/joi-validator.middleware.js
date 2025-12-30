@@ -9,7 +9,7 @@ export const joiValidator = (schema) => {
         const { value, error, warning } = schema.validate(req.body);
         
         if (error) {
-            return next({ status: 409, message: error });
+            return next({ status: 400, message: error.message });
         }
 
         req.body = value; 
